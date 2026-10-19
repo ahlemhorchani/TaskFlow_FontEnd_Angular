@@ -1,9 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ProjectListComponent } from './features/projects/components/project-list/project-list';
+import { UserListComponent } from './features/users/components/user-list/user-list';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
+  standalone: true,
+  imports: [ProjectListComponent, UserListComponent],
   styleUrl: './app.css',
   templateUrl: './app.html',
 })

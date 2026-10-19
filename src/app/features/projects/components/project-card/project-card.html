@@ -1,0 +1,55 @@
+<div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 p-6 border border-slate-100 flex flex-col justify-between h-full">
+  <div>
+    <!-- En-tête : Nom & Statut du projet -->
+    <div class="flex justify-between items-start gap-4 mb-3">
+      <h3 class="text-lg font-bold text-slate-900 leading-snug">
+        {{ project().name | uppercase }}
+      </h3>
+      <span
+        class="text-xs font-semibold px-2.5 py-1 rounded-full border shrink-0"
+        [ngClass]="getProjectStatusClass(project().status)"
+      >
+        {{ project().status }}
+      </span>
+    </div>
+
+    <!-- Budget et Date de début -->
+    <div class="flex flex-col sm:flex-row justify-between text-sm text-gray-600 mb-3 gap-1">
+      <h4 class="font-medium">Budget : {{ project().budget | currency:'TND' }}</h4>
+    </div>
+    <div class="flex flex-col sm:flex-row justify-between text-sm text-gray-600 mb-3 gap-1">
+
+    <p>Début : {{ project().startDate | date:'dd MMMM yyyy' }}</p>
+
+
+    </div>
+
+    <!-- Description du projet -->
+    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+      {{ project().description }}
+    </p>
+
+    <!-- Taux de réalisation -->
+    <div class="mb-4 flex items-center justify-between text-sm font-medium text-gray-700 bg-gray-50 p-2.5 rounded-lg border border-gray-100">
+      <span>Taux de réalisation :</span>
+      <span class="font-bold text-indigo-600">
+        {{ completionRate() | percent:'1.0-0' }}
+      </span>
+    </div>
+
+    <!-- Liste des tâches -->
+    <div class="mt-2">
+      <app-task-list [tasks]="project().tasks"></app-task-list>
+    </div>
+  </div>
+
+  <!-- Bouton de sélection -->
+  <div class="mt-6 pt-4 border-t border-slate-100">
+    <button
+      (click)="selectProject()"
+      class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium text-sm rounded-lg transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+    >
+      Sélectionner le projet
+    </button>
+  </div>
+</div>

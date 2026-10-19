@@ -1,0 +1,57 @@
+<div
+  (click)="selectUser()"
+  class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow cursor-pointer space-y-4"
+>
+  <!-- En-tête : Informations utilisateur & Badge Actif/Inactif -->
+  <div class="flex items-start justify-between">
+    <div>
+      <h3 class="text-lg font-bold text-gray-900">{{ user().name }}</h3>
+      <p class="text-sm text-gray-500">{{ user().email }}</p>
+    </div>
+
+    <div class="flex flex-col items-end gap-1">
+      @if (user().active) {
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+          Actif
+        </span>
+      } @else {
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">
+          Inactif
+        </span>
+      }
+
+      <span [class]="'px-2 py-0.5 rounded text-xs font-medium border ' + getProjectRoleClass(user().role)">
+        {{ user().role }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Compteurs de tâches -->
+  <div class="grid grid-cols-3 gap-2 bg-gray-50 p-3 rounded-lg text-center text-xs font-medium">
+    <div class="bg-white p-2 rounded shadow-xs border border-gray-100">
+      <span class="block text-amber-600 font-bold text-sm">{{ todoTasksCount() }}</span>
+      <span class="text-gray-500">À faire</span>
+    </div>
+    <div class="bg-white p-2 rounded shadow-xs border border-gray-100">
+      <span class="block text-blue-600 font-bold text-sm">{{ inProgressTasksCount() }}</span>
+      <span class="text-gray-500">En cours</span>
+    </div>
+    <div class="bg-white p-2 rounded shadow-xs border border-gray-100">
+      <span class="block text-emerald-600 font-bold text-sm">{{ completedTasksCount() }}</span>
+      <span class="text-gray-500">Terminées</span>
+    </div>
+  </div>
+
+  <!-- Liste des tâches regroupées par projet (Utilisation de getProjectGroups() pour éviter l'erreur TS) -->
+  <div class="space-y-3 pt-2">
+    <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Tâches par projet</h4>
+
+    @for (group of getProjectGroups(); track group.projectName) {
+    <app-user-project-group [group]="group" />
+    } @empty {
+    <p class="text-sm text-gray-400 italic text-center py-2 bg-gray-50 rounded-lg">
+      Aucune tâche assignée
+    </p>
+    }
+  </div>
+</div>
